@@ -11,7 +11,7 @@ for arg in "$@"; do
         -h|--help)
             printf 'Usage: %s [--dry-run] [--user-only]\n' "$0"
             printf 'Link configs and the mute-light helper, then enable their services.\n'
-            printf 'Existing files are replaced; Noctalia GUI overrides are cleared.\n'
+            printf 'Existing files are replaced; Noctalia GUI overrides are preserved.\n'
             exit 0 ;;
         *) printf 'Unknown option: %s\n' "$arg" >&2; exit 1 ;;
     esac
@@ -34,7 +34,6 @@ if ! "$user_only"; then
 fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
-state_dir="${XDG_STATE_HOME:-$HOME/.local/state}"
 noctalia_dir="${NOCTALIA_CONFIG_HOME:-$config_dir/noctalia}"
 sources=(
     "$repo_dir/niri/config.kdl"
@@ -79,14 +78,10 @@ for i in "${!sources[@]}"; do
     fi
 done
 
-# The tracked TOML is declarative; Noctalia owns and rewrites its override file.
-overrides="$state_dir/noctalia/settings.toml"
-printf 'Clear Noctalia GUI overrides: %s\n' "$overrides"
 if "$dry_run"; then
     printf 'Would reload Noctalia and enable/restart mute-led.service.\n'
     exit 0
 fi
-if [[ -f "$overrides" || -L "$overrides" ]]; then unlink -- "$overrides"; fi
 systemctl --user daemon-reload
 systemctl --user enable mute-led.service
 systemctl --user restart mute-led.service

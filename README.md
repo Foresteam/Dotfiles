@@ -22,9 +22,8 @@ and cursor assets must already be installed.
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
 
 Noctalia rewrites `~/.local/state/noctalia/settings.toml` when settings change
-through the UI, so the installer links the declarative config instead. Installing
-clears those GUI overrides so the tracked settings take effect. Save any wanted
-GUI changes in Git before reinstalling.
+through the UI, so the installer links the declarative config instead. Existing
+GUI overrides are preserved and take precedence over the tracked settings.
 
 Keyd sends F24 when Win is tapped and keeps Win as a modifier when held. Niri maps
 F24 to its overview. Fn brightness, volume, and media shortcuts use Noctalia.
