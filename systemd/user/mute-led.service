@@ -5,7 +5,7 @@ Wants=pipewire-pulse.service
 PartOf=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/python3 /home/foresteam/Documents/code/rice/scripts/sync-mute-led.py
+ExecStart=%h/.local/bin/rice-sync-mute-led
 Restart=on-failure
 RestartSec=2
 
