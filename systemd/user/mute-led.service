@@ -1,0 +1,13 @@
+[Unit]
+Description=Keep the F1 mute light in sync with the default audio output
+After=pipewire-pulse.service
+Wants=pipewire-pulse.service
+PartOf=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/foresteam/Documents/code/rice/scripts/sync-mute-led.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
