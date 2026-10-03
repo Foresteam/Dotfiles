@@ -92,6 +92,12 @@ niri_overview_type_to_launch_enabled = true
 [theme]
 builtin = "Tokyo-Night"
 
+[theme.templates.user.vscodium_alpha]
+input_path = "$XDG_CONFIG_HOME/noctalia/templates/vscodium-alpha.json"
+output_path = "$XDG_STATE_HOME/noctalia/vscodium-alpha.json"
+post_hook = 'python3 "$HOME/.local/bin/rice-patch-vscodium-theme" "${XDG_STATE_HOME:-$HOME/.local/state}/noctalia/vscodium-alpha.json"'
+hook_async = false
+
 [wallpaper.default]
 path = "/home/foresteam/Pictures/GT5HOdIcuZkg1s_dyOBMUZSUw6NqfW5K67BcwjdQPEZ-UGvXkYcJ68f8716A6L8qYhSEAT3fD5Ai4XYzejswL_Bv.jpg"
 

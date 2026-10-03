@@ -44,6 +44,8 @@ sources=(
     "$repo_dir/noctalia/settings.toml"
     "$repo_dir/mimeapps.list"
     "$repo_dir/scripts/sync-mute-led.py"
+    "$repo_dir/scripts/patch-vscodium-theme.py"
+    "$repo_dir/noctalia/templates/vscodium-alpha.json"
     "$repo_dir/systemd/user/mute-led.service"
 )
 targets=(
@@ -51,6 +53,8 @@ targets=(
     "$noctalia_dir/rice.toml"
     "$config_dir/mimeapps.list"
     "$HOME/.local/bin/rice-sync-mute-led"
+    "$HOME/.local/bin/rice-patch-vscodium-theme"
+    "$noctalia_dir/templates/vscodium-alpha.json"
     "$config_dir/systemd/user/mute-led.service"
 )
 

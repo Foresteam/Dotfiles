@@ -17,6 +17,8 @@ and cursor assets must already be installed.
 | --- | --- |
 | `niri/config.kdl` | `~/.config/niri/config.kdl` |
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
+| `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
+| `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
@@ -25,6 +27,14 @@ and cursor assets must already be installed.
 Noctalia rewrites `~/.local/state/noctalia/settings.toml` when settings change
 through the UI, so the installer links the declarative config instead. Existing
 GUI overrides are preserved and take precedence over the tracked settings.
+
+The VSCodium opacity template runs after the community VSCode template. Its
+synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
+preserving generated RGB colors and adding `A6` alpha to the listed backgrounds,
+`80` to inactive title/tabs, and `B3` to the active tab. The terminal is fully
+transparent. Missing tokens use the overlay's current palette color. Edit
+`noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
+community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.
 
 Keyd sends F24 when Win is tapped and keeps Win as a modifier when held. Niri maps
 F24 to its overview. Fn brightness, volume, and media shortcuts use Noctalia.

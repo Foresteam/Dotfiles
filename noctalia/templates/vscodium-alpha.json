@@ -1,0 +1,13 @@
+{
+    "editor.background": "{{colors.background.default.hex}}A6",
+    "editorGroupHeader.tabsBackground": "{{colors.background.default.hex}}A6",
+    "sideBar.background": "{{colors.surface_container.default.hex}}A6",
+    "activityBar.background": "{{colors.surface.default.hex}}A6",
+    "panel.background": "{{colors.surface.default.hex}}A6",
+    "terminal.background": "#00000000",
+    "titleBar.activeBackground": "{{colors.surface.default.hex}}A6",
+    "titleBar.inactiveBackground": "{{colors.surface_variant.default.hex}}80",
+    "statusBar.background": "{{colors.surface_variant.default.hex}}A6",
+    "tab.activeBackground": "{{colors.surface_variant.default.hex}}B3",
+    "tab.inactiveBackground": "{{colors.surface.default.hex}}80"
+}
