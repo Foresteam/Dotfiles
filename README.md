@@ -19,7 +19,7 @@ and cursor assets must already be installed.
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
 | `environment.d/qt.conf` | `~/.config/environment.d/qt.conf` |
 | `pipewire/pipewire.conf.d/99-hifi.conf` | `~/.config/pipewire/pipewire.conf.d/99-hifi.conf` |
-| `pipewire/pipewire-pulse.conf.d/pipewire.conf` | `/etc/pipewire/pipewire-pulse.conf.d/pipewire.conf` |
+| `pipewire/pipewire-pulse.conf.d/pipewire.conf` | `~/.config/pipewire/pipewire-pulse.conf.d/pipewire.conf` |
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
