@@ -19,7 +19,7 @@ def patch_theme(path, overrides):
             raise ValueError(f"Invalid overlay color for {token}: {fallback!r}")
         original = colors.get(token, fallback)
         if token == "terminal.background":
-            updated[token] = "#00000000"
+            updated[token] = fallback
         elif re.fullmatch(r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?", original):
             updated[token] = original[:7] + fallback[-2:]
         else:
