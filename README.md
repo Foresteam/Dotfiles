@@ -9,9 +9,9 @@ the F1 mute-light helper as `~/.local/bin/rice-sync-mute-led`, and enables keyd
 and the mute-light user service. Use `--user-only` to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
-Required commands: `niri`, `noctalia`, `keyd`, `python3`, `wpctl`, `pactl`,
-`busctl`, `systemctl`, `git`, and `sudo`. Existing applications, wallpapers, fonts,
-and cursor assets must already be installed.
+Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `python3`,
+`wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
+wallpapers, fonts, and cursor assets must already be installed.
 
 | Tracked file | Installed location |
 | --- | --- |
@@ -20,6 +20,8 @@ and cursor assets must already be installed.
 | `environment.d/qt.conf` | `~/.config/environment.d/qt.conf` |
 | `pipewire/pipewire.conf.d/99-hifi.conf` | `~/.config/pipewire/pipewire.conf.d/99-hifi.conf` |
 | `pipewire/pipewire-pulse.conf.d/pipewire.conf` | `~/.config/pipewire/pipewire-pulse.conf.d/pipewire.conf` |
+| `kitty/kitty.conf` | `~/.config/kitty/kitty.conf` |
+| `kitty/clean-copy.sh` | `~/.config/kitty/clean-copy.sh` |
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
@@ -41,6 +43,10 @@ as `~/.config/Kvantum/.Kvantum-Tokyo-Night.rice-backup` before linking it.
 Matching Discord theme:
 [DiscordTokyoNightTransparent](https://github.com/Foresteam/DiscordTokyoNightTransparent).
 
+Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
+generates. The installer links Kitty's main config and clean-copy helper while
+leaving the generated color file in place.
+
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
 preserving generated RGB colors and capping all background tokens at `A6` alpha.
@@ -51,8 +57,7 @@ is fully transparent. Missing tokens use the overlay's current palette color. Ed
 `noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
 community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.
 
-Ghostty opens its settings as `~/.config/ghostty/config.ghostty` in the default
-editor. `mimeapps.list` assigns both plain text and empty files to VSCodium:
+`mimeapps.list` assigns both plain text and empty files to VSCodium:
 `xdg-open` identifies an empty config as `inode/x-empty`, while GIO uses
 `application/x-zerosize`. Without an empty-file association, `xdg-open` can fall
 back to a browser. Apply the tracked associations with

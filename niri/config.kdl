@@ -702,7 +702,6 @@ window-rule {
     match app-id="codex-monitor"
     match app-id="librewolf"
     match app-id="goofcord"
-		match app-id="com.mitchellh.ghostty"
 		match app-id="kitty"
 		match app-id="kvantummanager"
 		match app-id="org.kde.dolphin"
