@@ -15,7 +15,7 @@ reserve_space = false
 
 [lockscreen]
 lock_before_suspend = true
-transition = []
+transition_duration = 400
 
 [lockscreen_widgets]
 enabled = false
