@@ -13,6 +13,10 @@ launcher_position = "start"
 pinned = [ "librewolf" ]
 reserve_space = false
 
+[lockscreen]
+lock_before_suspend = true
+transition = []
+
 [lockscreen_widgets]
 enabled = false
 schema_version = 2
