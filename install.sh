@@ -10,7 +10,7 @@ for arg in "$@"; do
         --user-only) user_only=true ;;
         -h|--help)
             printf 'Usage: %s [--dry-run] [--user-only]\n' "$0"
-            printf 'Link configs and the mute-light helper, then enable their services.\n'
+            printf 'Link configs and helpers, then enable their services.\n'
             printf 'Existing files are replaced; Noctalia GUI overrides are preserved.\n'
             exit 0 ;;
         *) printf 'Unknown option: %s\n' "$arg" >&2; exit 1 ;;
@@ -31,6 +31,10 @@ done
 if ! "$user_only"; then
     command -v sudo >/dev/null
     command -v keyd >/dev/null
+    [[ -f "$repo_dir/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf" ]] || {
+        printf 'Missing suspend delay config.\n' >&2
+        exit 1
+    }
 fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -58,15 +62,23 @@ for i in "${!sources[@]}"; do
         exit 1
     fi
 done
-niri validate -c "$repo_dir/niri/config.kdl"
+# When already linked, validate through the installed path so relative includes
+# (such as Noctalia's generated niri/noctalia.kdl) resolve beside config.kdl.
+niri_config="$repo_dir/niri/config.kdl"
+if [[ -L "$config_dir/niri/config.kdl" && "$(readlink -f -- "$config_dir/niri/config.kdl")" == "$niri_config" ]]; then
+    niri_config="$config_dir/niri/config.kdl"
+fi
+niri validate -c "$niri_config"
 noctalia config validate "$repo_dir/noctalia/settings.toml"
 if ! "$user_only"; then keyd check "$repo_dir/keyd/default.conf"; fi
 
 if ! "$user_only"; then
     if "$dry_run"; then
         printf 'System link: /etc/keyd/default.conf -> %s/keyd/default.conf\n' "$repo_dir"
+        printf 'System link: /etc/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf -> %s/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf\n' "$repo_dir"
     else
         sudo bash "$repo_dir/scripts/install-keyd.sh"
+        sudo bash "$repo_dir/scripts/install-suspend-delay.sh"
     fi
 fi
 
