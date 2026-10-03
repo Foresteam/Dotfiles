@@ -650,22 +650,12 @@ window-rule {
     open-maximized-to-edges false
 }
 
-// Tile windows that would otherwise open floating, unless a later rule exempts them.
-window-rule {
-    open-floating false
-}
-
-// Dolphin's file and folder creation dialogs should remain small and floating.
-window-rule {
-    match app-id=r#"^org\.kde\.dolphin$"# title=r#"^(Create .*|New File|Dialog)$"#
-    open-floating true
-}
-
+// Let Niri's built-in dialog detection float parented and fixed-size windows.
+// Add narrow open-floating false rules only for specific large dialogs when needed.
 // Keep KDE authentication and desktop portal prompts floating.
 window-rule {
     match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde))$"#
-    // exclude title=r#"(?i)(Save as|Open as|Load from|Save to|Select file|Select folder)"#
-		open-floating true
+    open-floating true
 }
 
 debug {
