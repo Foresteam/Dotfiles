@@ -35,6 +35,10 @@ if ! "$user_only"; then
         printf 'Missing suspend delay config.\n' >&2
         exit 1
     }
+    [[ -f "$repo_dir/pipewire/pipewire-pulse.conf.d/pipewire.conf" ]] || {
+        printf 'Missing PipeWire Pulse system config.\n' >&2
+        exit 1
+    }
 fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
@@ -51,6 +55,7 @@ sources=(
     "$repo_dir/niri/config.kdl"
     "$repo_dir/noctalia/settings.toml"
     "$repo_dir/environment.d/qt.conf"
+    "$repo_dir/pipewire/pipewire.conf.d/99-hifi.conf"
     "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
     "$repo_dir/scripts/sync-mute-led.py"
@@ -63,6 +68,7 @@ targets=(
     "$config_dir/niri/config.kdl"
     "$noctalia_dir/rice.toml"
     "$config_dir/environment.d/qt.conf"
+    "$config_dir/pipewire/pipewire.conf.d/99-hifi.conf"
     "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
     "$HOME/.local/bin/rice-sync-mute-led"
@@ -99,9 +105,12 @@ if ! "$user_only"; then
     if "$dry_run"; then
         printf 'System link: /etc/keyd/default.conf -> %s/keyd/default.conf\n' "$repo_dir"
         printf 'System link: /etc/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf -> %s/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf\n' "$repo_dir"
+        printf 'System link: /etc/pipewire/pipewire-pulse.conf.d/pipewire.conf -> %s/pipewire/pipewire-pulse.conf.d/pipewire.conf\n' "$repo_dir"
     else
         sudo bash "$repo_dir/scripts/install-keyd.sh"
         sudo bash "$repo_dir/scripts/install-suspend-delay.sh"
+        sudo install -d -- /etc/pipewire/pipewire-pulse.conf.d
+        sudo ln -sfnT -- "$repo_dir/pipewire/pipewire-pulse.conf.d/pipewire.conf" /etc/pipewire/pipewire-pulse.conf.d/pipewire.conf
     fi
 fi
 
