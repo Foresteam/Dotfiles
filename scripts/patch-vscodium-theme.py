@@ -14,7 +14,23 @@ def patch_theme(path, overrides):
     theme = json.loads(path.read_text())
     colors = theme["colors"]
     updated = dict(colors)
+    default_alpha = overrides.get("_defaultBackgroundAlpha")
+    if default_alpha is not None:
+        if not re.fullmatch(r"[0-9a-fA-F]{2}", default_alpha):
+            raise ValueError(f"Invalid default background alpha: {default_alpha!r}")
+        limit = int(default_alpha, 16)
+        for token, color in colors.items():
+            if "background" not in token.lower():
+                continue
+            if not isinstance(color, str) or not re.fullmatch(
+                r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?", color
+            ):
+                continue
+            current_alpha = int(color[-2:], 16) if len(color) == 9 else 255
+            updated[token] = color[:7] + f"{min(current_alpha, limit):02X}"
     for token, fallback in overrides.items():
+        if token == "_defaultBackgroundAlpha":
+            continue
         if not re.fullmatch(r"#[0-9a-fA-F]{8}", fallback):
             raise ValueError(f"Invalid overlay color for {token}: {fallback!r}")
         original = colors.get(token, fallback)

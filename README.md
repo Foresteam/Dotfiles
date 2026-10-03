@@ -30,8 +30,9 @@ GUI overrides are preserved and take precedence over the tracked settings.
 
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
-preserving generated RGB colors and adding `A6` alpha to the listed backgrounds,
-`80` to inactive title/tabs, and `B3` to the active tab. The terminal is fully
+preserving generated RGB colors and capping all background tokens at `A6` alpha.
+Already translucent highlights stay at their lower opacity. Explicit entries use
+`80` for inactive title/tabs and `B3` for the active tab. The terminal is fully
 transparent. Missing tokens use the overlay's current palette color. Edit
 `noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
 community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.

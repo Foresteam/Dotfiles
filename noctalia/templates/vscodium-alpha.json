@@ -1,4 +1,5 @@
 {
+    "_defaultBackgroundAlpha": "A6",
     "editor.background": "{{colors.background.default.hex}}A6",
     "editorGroupHeader.tabsBackground": "{{colors.background.default.hex}}A6",
     "sideBar.background": "{{colors.surface_container.default.hex}}A6",
@@ -9,5 +10,9 @@
     "titleBar.inactiveBackground": "{{colors.surface_variant.default.hex}}80",
     "statusBar.background": "{{colors.surface_variant.default.hex}}A6",
     "tab.activeBackground": "{{colors.surface_variant.default.hex}}B3",
-    "tab.inactiveBackground": "{{colors.surface.default.hex}}80"
+    "tab.inactiveBackground": "{{colors.surface.default.hex}}80",
+    "quickInput.background": "{{colors.surface.default.hex}}A6",
+    "quickInputTitle.background": "{{colors.surface.default.hex}}A6",
+    "chat.requestBackground": "{{colors.surface.default.hex}}A6",
+    "chat.requestBubbleBackground": "{{colors.surface.default.hex}}A6"
 }
