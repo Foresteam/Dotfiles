@@ -38,6 +38,9 @@ The installer initializes the HTTPS Kvantum submodule when needed, then links
 the theme directory and selection config. It backs up an existing theme directory
 as `~/.config/Kvantum/.Kvantum-Tokyo-Night.rice-backup` before linking it.
 
+Matching Discord theme:
+[DiscordTokyoNightTransparent](https://github.com/Foresteam/DiscordTokyoNightTransparent).
+
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
 preserving generated RGB colors and capping all background tokens at `A6` alpha.
