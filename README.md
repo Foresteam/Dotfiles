@@ -17,6 +17,7 @@ and cursor assets must already be installed.
 | --- | --- |
 | `niri/config.kdl` | `~/.config/niri/config.kdl` |
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
+| `environment.d/qt.conf` | `~/.config/environment.d/qt.conf` |
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |

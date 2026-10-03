@@ -50,6 +50,7 @@ fi
 sources=(
     "$repo_dir/niri/config.kdl"
     "$repo_dir/noctalia/settings.toml"
+    "$repo_dir/environment.d/qt.conf"
     "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
     "$repo_dir/scripts/sync-mute-led.py"
@@ -61,6 +62,7 @@ sources=(
 targets=(
     "$config_dir/niri/config.kdl"
     "$noctalia_dir/rice.toml"
+    "$config_dir/environment.d/qt.conf"
     "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
     "$HOME/.local/bin/rice-sync-mute-led"
