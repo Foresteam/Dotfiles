@@ -705,6 +705,7 @@ window-rule {
 		match app-id="kitty"
 		match app-id="kvantummanager"
 		match app-id="org.kde.dolphin"
+		match app-id="org.prismlauncher.PrismLauncher"
 
     background-effect {
         blur true
