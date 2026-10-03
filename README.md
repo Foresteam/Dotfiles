@@ -23,6 +23,7 @@ and cursor assets must already be installed.
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
 | `systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` | `/etc/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` |
+| `systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` | `~/.config/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` |
 
 Noctalia rewrites `~/.local/state/noctalia/settings.toml` when settings change
 through the UI, so the installer links the declarative config instead. Existing
@@ -37,6 +38,13 @@ entries use `80` for inactive title/tabs and `B3` for the active tab. The termin
 is fully transparent. Missing tokens use the overlay's current palette color. Edit
 `noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
 community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.
+
+Ghostty opens its settings as `~/.config/ghostty/config.ghostty` in the default
+editor. `mimeapps.list` assigns both plain text and empty files to VSCodium:
+`xdg-open` identifies an empty config as `inode/x-empty`, while GIO uses
+`application/x-zerosize`. Without an empty-file association, `xdg-open` can fall
+back to a browser. Apply the tracked associations with
+`install -m 600 mimeapps.list ~/.config/mimeapps.list`.
 
 Keyd sends F24 when Win is tapped and keeps Win as a modifier when held. Niri maps
 F24 to its overview. Fn brightness, volume, and media shortcuts use Noctalia.

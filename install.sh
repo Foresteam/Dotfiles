@@ -47,6 +47,7 @@ sources=(
     "$repo_dir/scripts/patch-vscodium-theme.py"
     "$repo_dir/noctalia/templates/vscodium-alpha.json"
     "$repo_dir/systemd/user/mute-led.service"
+    "$repo_dir/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf"
 )
 targets=(
     "$config_dir/niri/config.kdl"
@@ -56,6 +57,7 @@ targets=(
     "$HOME/.local/bin/rice-patch-vscodium-theme"
     "$noctalia_dir/templates/vscodium-alpha.json"
     "$config_dir/systemd/user/mute-led.service"
+    "$config_dir/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf"
 )
 
 # Validate all sources and destinations before replacing anything.
@@ -95,12 +97,14 @@ for i in "${!sources[@]}"; do
 done
 
 if "$dry_run"; then
-    printf 'Would reload Noctalia and enable/restart mute-led.service.\n'
+    printf 'Would reload Noctalia, enable/restart mute-led.service, and restart the KDE portal.\n'
     exit 0
 fi
 systemctl --user daemon-reload
 systemctl --user enable mute-led.service
 systemctl --user restart mute-led.service
+systemctl --user restart plasma-xdg-desktop-portal-kde.service
+systemctl --user restart xdg-desktop-portal.service
 if ! noctalia msg config-reload; then
     printf 'Noctalia is not running; the config will load on its next start.\n' >&2
 fi

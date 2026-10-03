@@ -116,6 +116,8 @@ video/x-flv=org.videolan.VLC.desktop
 application/x-cue=audacious.desktop
 text/javascript=codium.desktop
 text/plain=codium.desktop
+inode/x-empty=codium.desktop
+application/x-zerosize=codium.desktop
 text/markdown=codium.desktop
 application/ogg=audacious.desktop
 application/x-ogg=audacious.desktop
@@ -130,6 +132,7 @@ audio/x-s3m=audacious.desktop
 audio/x-stm=audacious.desktop
 audio/x-xm=audacious.desktop
 x-content/audio-cdda=audacious.desktop
+x-scheme-handler/nxm=amethystmodmanager-nxm.desktop
 
 [Added Associations]
 x-scheme-handler/http=librewolf.desktop;
@@ -246,4 +249,6 @@ video/x-flv=org.videolan.VLC.desktop;
 application/x-cue=audacious.desktop;codium.desktop;
 text/javascript=codium.desktop;
 text/plain=sublime_text.desktop;codium.desktop;
+inode/x-empty=codium.desktop;
+application/x-zerosize=codium.desktop;
 text/markdown=codium.desktop;
