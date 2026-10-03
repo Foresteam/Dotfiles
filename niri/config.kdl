@@ -650,8 +650,13 @@ window-rule {
     open-maximized-to-edges false
 }
 
-// Let Niri's built-in dialog detection float parented and fixed-size windows.
-// Add narrow open-floating false rules only for specific large dialogs when needed.
+// Tile popups by default, but let Niri decide for apps with small child dialogs.
+// Their main windows still tile normally; parented/fixed-size dialogs may float.
+window-rule {
+    exclude app-id=r#"^(org\.kde\.dolphin|codium|vscodium|VSCodium)$"#
+    open-floating false
+}
+
 // Keep KDE authentication and desktop portal prompts floating.
 window-rule {
     match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde))$"#
