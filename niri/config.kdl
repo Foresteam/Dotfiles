@@ -296,6 +296,23 @@ animations {
 // Find more information on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Window-Rules
 
+// Tile windows that would otherwise open floating, unless a later rule exempts them.
+window-rule {
+    open-floating false
+}
+
+// Dolphin's file and folder creation dialogs should remain small and floating.
+window-rule {
+    match app-id=r#"^org\.kde\.dolphin$"# title=r#"^(Create .*|New File|Dialog)$"#
+    open-floating true
+}
+
+// Keep KDE authentication and desktop portal prompts floating.
+window-rule {
+    match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde)|org\.freedesktop\.impl\.portal\.desktop\.kde)$"#
+    open-floating true
+}
+
 // Work around WezTerm's initial configure bug
 // by setting an empty default-column-width.
 window-rule {
