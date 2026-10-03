@@ -660,6 +660,7 @@ window-rule {
 // Keep KDE authentication and desktop portal prompts floating.
 window-rule {
     match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde))$"#
+		match title=r#"Overwrite"#
     open-floating true
 }
 
