@@ -3,9 +3,9 @@
 
   "terminal.background": "#00000000",
   "titleBar.inactiveBackground": "{{colors.surface_variant.default.hex}}80",
-  "tab.activeBackground": "{{colors.surface_variant.default.hex}}B3",
   "tab.inactiveBackground": "{{colors.surface.default.hex}}80",
-  "editor.background": "{{colors.background.default.hex}}A6",
+  "tab.activeBackground": "{{colors.surface_variant.default.hex}}80",
+  "editor.background": "{{colors.background.default.hex}}80",
   "editorGroupHeader.tabsBackground": "{{colors.background.default.hex}}A6",
   "sideBar.background": "{{colors.surface_container.default.hex}}A6",
   "activityBar.background": "{{colors.surface.default.hex}}A6",
