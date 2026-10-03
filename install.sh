@@ -22,7 +22,7 @@ if (( EUID == 0 )); then
     exit 1
 fi
 
-for command in niri noctalia python3 systemctl wpctl pactl busctl; do
+for command in niri noctalia python3 systemctl wpctl pactl busctl git; do
     command -v "$command" >/dev/null || {
         printf 'Missing dependency: %s\n' "$command" >&2
         exit 1
@@ -39,9 +39,18 @@ fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 noctalia_dir="${NOCTALIA_CONFIG_HOME:-$config_dir/noctalia}"
+kvantum_theme="$repo_dir/kvantum/Kvantum-Tokyo-Night/Kvantum-Tokyo-Night"
+if [[ ! -f "$kvantum_theme/Kvantum-Tokyo-Night.kvconfig" || ! -f "$kvantum_theme/Kvantum-Tokyo-Night.svg" ]]; then
+    if "$dry_run"; then
+        printf 'Would initialize Kvantum-Tokyo-Night submodule.\n'
+    else
+        git -C "$repo_dir" submodule update --init --recursive -- kvantum/Kvantum-Tokyo-Night
+    fi
+fi
 sources=(
     "$repo_dir/niri/config.kdl"
     "$repo_dir/noctalia/settings.toml"
+    "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
     "$repo_dir/scripts/sync-mute-led.py"
     "$repo_dir/scripts/patch-vscodium-theme.py"
@@ -52,6 +61,7 @@ sources=(
 targets=(
     "$config_dir/niri/config.kdl"
     "$noctalia_dir/rice.toml"
+    "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
     "$HOME/.local/bin/rice-sync-mute-led"
     "$HOME/.local/bin/rice-patch-vscodium-theme"
@@ -68,6 +78,11 @@ for i in "${!sources[@]}"; do
         exit 1
     fi
 done
+kvantum_target="$config_dir/Kvantum/Kvantum-Tokyo-Night"
+if [[ ! -f "$kvantum_theme/Kvantum-Tokyo-Night.kvconfig" || ! -f "$kvantum_theme/Kvantum-Tokyo-Night.svg" ]] && ! "$dry_run"; then
+    printf 'Kvantum submodule is incomplete: %s\n' "$kvantum_theme" >&2
+    exit 1
+fi
 # When already linked, validate through the installed path so relative includes
 # (such as Noctalia's generated niri/noctalia.kdl) resolve beside config.kdl.
 niri_config="$repo_dir/niri/config.kdl"
@@ -95,6 +110,22 @@ for i in "${!sources[@]}"; do
         ln -sfnT -- "${sources[i]}" "${targets[i]}"
     fi
 done
+
+if [[ -e "$kvantum_target" && ! -L "$kvantum_target" ]]; then
+    backup="$config_dir/Kvantum/.Kvantum-Tokyo-Night.rice-backup"
+    if [[ -e "$backup" ]]; then
+        backup="$backup.$(date +%Y%m%d%H%M%S)"
+    fi
+    printf 'Backup: %s -> %s\n' "$kvantum_target" "$backup"
+    if ! "$dry_run"; then
+        mv -- "$kvantum_target" "$backup"
+    fi
+fi
+printf 'Link: %s -> %s\n' "$kvantum_target" "$kvantum_theme"
+if ! "$dry_run"; then
+    mkdir -p -- "$(dirname -- "$kvantum_target")"
+    ln -sfnT -- "$kvantum_theme" "$kvantum_target"
+fi
 
 if "$dry_run"; then
     printf 'Would reload Noctalia, enable/restart mute-led.service, and restart the KDE portal.\n'

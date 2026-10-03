@@ -10,13 +10,15 @@ and the mute-light user service. Use `--user-only` to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
 Required commands: `niri`, `noctalia`, `keyd`, `python3`, `wpctl`, `pactl`,
-`busctl`, `systemctl`, and `sudo`. Existing applications, wallpapers, fonts,
+`busctl`, `systemctl`, `git`, and `sudo`. Existing applications, wallpapers, fonts,
 and cursor assets must already be installed.
 
 | Tracked file | Installed location |
 | --- | --- |
 | `niri/config.kdl` | `~/.config/niri/config.kdl` |
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
+| `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
+| `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
@@ -28,6 +30,10 @@ and cursor assets must already be installed.
 Noctalia rewrites `~/.local/state/noctalia/settings.toml` when settings change
 through the UI, so the installer links the declarative config instead. Existing
 GUI overrides are preserved and take precedence over the tracked settings.
+
+The installer initializes the HTTPS Kvantum submodule when needed, then links
+the theme directory and selection config. It backs up an existing theme directory
+as `~/.config/Kvantum/.Kvantum-Tokyo-Night.rice-backup` before linking it.
 
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
