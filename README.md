@@ -9,8 +9,8 @@ the F1 mute-light helper as `~/.local/bin/rice-sync-mute-led`, and enables keyd
 and the mute-light user service. Use `--user-only` to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
-Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `python3`,
-`wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
+Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `notify-send`,
+`python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
 wallpapers, fonts, and cursor assets must already be installed.
 
 | Tracked file | Installed location |
@@ -21,6 +21,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `pipewire/pipewire.conf.d/99-hifi.conf` | `~/.config/pipewire/pipewire.conf.d/99-hifi.conf` |
 | `pipewire/pipewire-pulse.conf.d/pipewire.conf` | `~/.config/pipewire/pipewire-pulse.conf.d/pipewire.conf` |
 | `kitty/kitty.conf` | `~/.config/kitty/kitty.conf` |
+| `kitty/copy.sh` | `~/.config/kitty/copy.sh` |
 | `kitty/clean-copy.sh` | `~/.config/kitty/clean-copy.sh` |
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
@@ -44,7 +45,7 @@ Matching Discord theme:
 [DiscordTokyoNightTransparent](https://github.com/Foresteam/DiscordTokyoNightTransparent).
 
 Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
-generates. The installer links Kitty's main config and clean-copy helper while
+generates. The installer links Kitty's main config and copy helpers while
 leaving the generated color file in place.
 
 The VSCodium opacity template runs after the community VSCode template. Its

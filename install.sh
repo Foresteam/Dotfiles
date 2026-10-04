@@ -22,7 +22,7 @@ if (( EUID == 0 )); then
     exit 1
 fi
 
-for command in niri noctalia kitty wl-copy python3 systemctl wpctl pactl busctl git; do
+for command in niri noctalia kitty wl-copy notify-send python3 systemctl wpctl pactl busctl git; do
     command -v "$command" >/dev/null || {
         printf 'Missing dependency: %s\n' "$command" >&2
         exit 1
@@ -54,6 +54,7 @@ sources=(
     "$repo_dir/pipewire/pipewire.conf.d/99-hifi.conf"
     "$repo_dir/pipewire/pipewire-pulse.conf.d/pipewire.conf"
     "$repo_dir/kitty/kitty.conf"
+    "$repo_dir/kitty/copy.sh"
     "$repo_dir/kitty/clean-copy.sh"
     "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
@@ -70,6 +71,7 @@ targets=(
     "$config_dir/pipewire/pipewire.conf.d/99-hifi.conf"
     "$config_dir/pipewire/pipewire-pulse.conf.d/pipewire.conf"
     "$config_dir/kitty/kitty.conf"
+    "$config_dir/kitty/copy.sh"
     "$config_dir/kitty/clean-copy.sh"
     "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
