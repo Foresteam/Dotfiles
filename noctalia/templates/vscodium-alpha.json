@@ -1,5 +1,6 @@
 {
   "_defaultBackgroundAlpha": "A6",
+  "_terminalAnsiAlpha": "FF",
 
   "terminal.background": "#00000000",
   "titleBar.inactiveBackground": "{{colors.surface_variant.default.hex}}80",

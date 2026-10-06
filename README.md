@@ -52,6 +52,10 @@ leaving the generated color file in place.
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
 preserving generated RGB colors and capping all background tokens at `A6` alpha.
+`_terminalAnsiAlpha` separately caps the 16 terminal ANSI palette colors at
+`A6`. Change that one value to tune colored terminal cells; the same palette
+also colors ANSI foreground text. The base `terminal.background` remains fully
+transparent.
 Already translucent highlights stay at their lower opacity. Popup and context
 menu surfaces use `FF` so they remain opaque without compositor blur. Explicit
 entries use `80` for inactive title/tabs and `B3` for the active tab. The terminal

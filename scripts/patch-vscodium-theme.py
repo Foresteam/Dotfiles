@@ -14,13 +14,18 @@ def patch_theme(path, overrides):
     theme = json.loads(path.read_text())
     colors = theme["colors"]
     updated = dict(colors)
-    default_alpha = overrides.get("_defaultBackgroundAlpha")
-    if default_alpha is not None:
-        if not re.fullmatch(r"[0-9a-fA-F]{2}", default_alpha):
-            raise ValueError(f"Invalid default background alpha: {default_alpha!r}")
-        limit = int(default_alpha, 16)
+    for setting, matches in (
+        ("_defaultBackgroundAlpha", lambda token: "background" in token.lower()),
+        ("_terminalAnsiAlpha", lambda token: token.startswith("terminal.ansi")),
+    ):
+        alpha = overrides.get(setting)
+        if alpha is None:
+            continue
+        if not re.fullmatch(r"[0-9a-fA-F]{2}", alpha):
+            raise ValueError(f"Invalid {setting}: {alpha!r}")
+        limit = int(alpha, 16)
         for token, color in colors.items():
-            if "background" not in token.lower():
+            if not matches(token):
                 continue
             if not isinstance(color, str) or not re.fullmatch(
                 r"#[0-9a-fA-F]{6}(?:[0-9a-fA-F]{2})?", color
@@ -29,7 +34,7 @@ def patch_theme(path, overrides):
             current_alpha = int(color[-2:], 16) if len(color) == 9 else 255
             updated[token] = color[:7] + f"{min(current_alpha, limit):02X}"
     for token, fallback in overrides.items():
-        if token == "_defaultBackgroundAlpha":
+        if token in ("_defaultBackgroundAlpha", "_terminalAnsiAlpha"):
             continue
         if not re.fullmatch(r"#[0-9a-fA-F]{8}", fallback):
             raise ValueError(f"Invalid overlay color for {token}: {fallback!r}")
