@@ -55,11 +55,14 @@ preserving generated RGB colors and capping all background tokens at `A6` alpha.
 `_terminalAnsiAlpha` separately caps the 16 terminal ANSI palette colors at
 `A6`. Change that one value to tune colored terminal cells; the same palette
 also colors ANSI foreground text. The base `terminal.background` remains fully
-transparent.
+transparent. VSCodium's GPU-accelerated terminal renderer draws colored cells
+opaque despite their alpha values, so disable it in
+`~/.config/VSCodium/User/settings.json` with
+`"terminal.integrated.gpuAcceleration": "off"` for these colors to work.
 Already translucent highlights stay at their lower opacity. Popup and context
 menu surfaces use `FF` so they remain opaque without compositor blur. Explicit
-entries use `80` for inactive title/tabs and `B3` for the active tab. The terminal
-is fully transparent. Missing tokens use the overlay's current palette color. Edit
+entries use `80` for inactive title/tabs and `B3` for the active tab. Missing
+tokens use the overlay's current palette color. Edit
 `noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
 community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.
 
