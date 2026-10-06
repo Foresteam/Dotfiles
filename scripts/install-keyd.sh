@@ -9,5 +9,5 @@ fi
 keyd check "$repo_dir/keyd/default.conf"
 install -d /etc/keyd
 ln -sfnT -- "$repo_dir/keyd/default.conf" /etc/keyd/default.conf
-systemctl enable --now keyd.service
-keyd reload
+systemctl enable keyd.service
+systemctl restart keyd.service
