@@ -372,7 +372,7 @@ binds {
     Mod+O repeat=false { toggle-overview; }
     F24 repeat=false { toggle-overview; }
 
-    // Mod+Q repeat=false { close-window; }
+    Mod+Q repeat=false { spawn-sh "sh \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/scripts/close-hovered-window.sh\""; }
 		Alt+F4 repeat=false { close-window; }
 
 		Mod+F1 { focus-workspace 1; }
@@ -660,7 +660,8 @@ window-rule {
 // Keep KDE authentication and desktop portal prompts floating.
 window-rule {
     match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde))$"#
-		match title=r#"Overwrite"#
+    match app-id="DesktopEditors"
+    match title=r#"Overwrite"#
     open-floating true
 }
 
@@ -698,20 +699,26 @@ layer-rule {
     }
 }
 window-rule {
-		match app-id=r#"^codium$"#
+    match app-id=r#"^codium$"#
     match app-id="codex-monitor"
     match app-id="librewolf"
     match app-id="goofcord"
-		match app-id="kitty"
-		match app-id="kvantummanager"
-		match app-id="org.kde.dolphin"
-		match app-id="org.kde.ark"
-		match app-id="org.prismlauncher.PrismLauncher"
-		match app-id="org.qbittorrent.qBittorrent"
+    match app-id="kitty"
+    match app-id="kvantummanager"
+    match app-id="org.kde.dolphin"
+    match app-id="org.kde.ark"
+    match app-id="org.prismlauncher.PrismLauncher"
+    match app-id="org.qbittorrent.qBittorrent"
+    match app-id="org.freedesktop.impl.portal.desktop.kde"
+    match app-id="octopi"
+    match app-id="vlc"
+    match app-id="spm"
+    match app-id="qt6ct"
+    match app-id="qt5ct"
 
     background-effect {
         blur true
-				xray false
+        xray false
     }
 }
 /* You can also fine-tune the blur effect globally. */

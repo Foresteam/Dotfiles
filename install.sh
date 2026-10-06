@@ -22,7 +22,7 @@ if (( EUID == 0 )); then
     exit 1
 fi
 
-for command in niri noctalia kitty wl-copy notify-send python3 systemctl wpctl pactl busctl git; do
+for command in niri noctalia kitty wl-copy notify-send jq python3 systemctl wpctl pactl busctl git; do
     command -v "$command" >/dev/null || {
         printf 'Missing dependency: %s\n' "$command" >&2
         exit 1
@@ -49,6 +49,7 @@ if [[ ! -f "$kvantum_theme/Kvantum-Tokyo-Night.kvconfig" || ! -f "$kvantum_theme
 fi
 sources=(
     "$repo_dir/niri/config.kdl"
+    "$repo_dir/niri/scripts/close-hovered-window.sh"
     "$repo_dir/noctalia/settings.toml"
     "$repo_dir/environment.d/qt.conf"
     "$repo_dir/pipewire/pipewire.conf.d/99-hifi.conf"
@@ -66,6 +67,7 @@ sources=(
 )
 targets=(
     "$config_dir/niri/config.kdl"
+    "$config_dir/niri/scripts/close-hovered-window.sh"
     "$noctalia_dir/rice.toml"
     "$config_dir/environment.d/qt.conf"
     "$config_dir/pipewire/pipewire.conf.d/99-hifi.conf"

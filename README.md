@@ -10,12 +10,13 @@ and the mute-light user service. Use `--user-only` to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
 Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `notify-send`,
-`python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
+`jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
 wallpapers, fonts, and cursor assets must already be installed.
 
 | Tracked file | Installed location |
 | --- | --- |
 | `niri/config.kdl` | `~/.config/niri/config.kdl` |
+| `niri/scripts/close-hovered-window.sh` | `~/.config/niri/scripts/close-hovered-window.sh` |
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
 | `environment.d/qt.conf` | `~/.config/environment.d/qt.conf` |
 | `pipewire/pipewire.conf.d/99-hifi.conf` | `~/.config/pipewire/pipewire.conf.d/99-hifi.conf` |
