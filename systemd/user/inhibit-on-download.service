@@ -1,0 +1,10 @@
+[Unit]
+Description=Prevent suspend during network downloads
+
+[Service]
+ExecStart=%h/.local/bin/inhibit-on-download
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=default.target

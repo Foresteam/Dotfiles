@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Suspend is blocked while incoming traffic exceeds 64 KiB/s, and for 30
+# seconds after it falls below that rate.
+threshold=$((64 * 1024))
+grace=30
+inhibitor_pid=""
+last_active=0
+
+rx_bytes() {
+    local iface bytes total=0
+    for iface in /sys/class/net/*; do
+        [[ "${iface##*/}" == lo || ! -r "$iface/statistics/rx_bytes" ]] && continue
+        read -r bytes < "$iface/statistics/rx_bytes"
+        ((total += bytes))
+    done
+    printf '%s\n' "$total"
+}
+
+stop_inhibitor() {
+    if [[ -n "$inhibitor_pid" ]]; then
+        kill "$inhibitor_pid" 2>/dev/null
+        wait "$inhibitor_pid" 2>/dev/null
+        inhibitor_pid=""
+    fi
+}
+
+trap 'stop_inhibitor; exit 0' TERM INT
+trap stop_inhibitor EXIT
+
+prev=$(rx_bytes)
+prev_time=$(date +%s)
+
+while sleep 1; do
+    now=$(rx_bytes)
+    time_now=$(date +%s)
+    elapsed=$((time_now - prev_time))
+    delta=$((now - prev))
+    prev=$now
+    prev_time=$time_now
+
+    if ((elapsed > 0 && delta >= threshold * elapsed)); then
+        last_active=$time_now
+        if [[ -z "$inhibitor_pid" ]] || ! kill -0 "$inhibitor_pid" 2>/dev/null; then
+            systemd-inhibit \
+                --what=sleep \
+                --mode=block \
+                --who="Network download monitor" \
+                --why="Network transfer in progress" \
+                sleep infinity &
+            inhibitor_pid=$!
+        fi
+    fi
+
+    if [[ -n "$inhibitor_pid" ]] && ((time_now - last_active >= grace)); then
+        stop_inhibitor
+    fi
+done

@@ -5,12 +5,14 @@ the tracked files before applying them; use Git history for rollback.
 
 Run `./install.sh --dry-run` to preview, then `./install.sh` to install. The
 installer replaces the files below with symlinks into this checkout, installs
-the F1 mute-light helper as `~/.local/bin/rice-sync-mute-led`, and enables keyd
-and the mute-light user service. Use `--user-only` to skip system changes.
+the F1 mute-light helper as `~/.local/bin/rice-sync-mute-led`, and enables keyd,
+the mute-light service, and the download suspend inhibitor. Use `--user-only`
+to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
 Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `notify-send`,
-`jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `git`, and `sudo`. Existing applications,
+`jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `systemd-inhibit`,
+`git`, and `sudo`. Existing applications,
 wallpapers, fonts, and cursor assets must already be installed.
 
 | Tracked file | Installed location |
@@ -28,9 +30,11 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
+| `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
+| `systemd/user/inhibit-on-download.service` | `~/.config/systemd/user/inhibit-on-download.service` |
 | `systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` | `/etc/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` |
 | `systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` | `~/.config/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` |
 
@@ -76,6 +80,11 @@ Keyd sends F24 when Win is tapped and keeps Win as a modifier when held. Niri ma
 F24 to its overview. Fn brightness, volume, and media shortcuts use Noctalia.
 The user service updates the F1 light from the default output's mute state,
 including USB audio devices, through logind.
+
+The download monitor checks incoming bytes on non-loopback network interfaces
+once per second. It blocks suspend above 64 KiB/s and releases the block 30
+seconds after traffic drops. This is a traffic heuristic, so streaming and
+other sustained incoming traffic also keep the machine awake.
 
 The systemd suspend drop-in waits two seconds before freezing the user session,
 giving Noctalia's lock animation time to finish. Install it separately with
