@@ -98,7 +98,7 @@ gestures {
 output "eDP-1" {
     mode "2560x1600@120.002"
     scale 1.75
-    variable-refresh-rate
+    variable-refresh-rate on-demand=true
 }
 
 // Settings that influence how windows are positioned and sized.
