@@ -7,7 +7,6 @@
 // Find the full list of options on the wiki:
 // https://niri-wm.github.io/niri/Configuration:-Input
 spawn-at-startup "noctalia"
-spawn-at-startup "/usr/lib/polkit-kde-authentication-agent-1"
 prefer-no-csd
 
 cursor {
@@ -98,7 +97,7 @@ gestures {
 output "eDP-1" {
     mode "2560x1600@120.002"
     scale 1.75
-    variable-refresh-rate on-demand=true
+    variable-refresh-rate// on-demand=true
 }
 
 // Settings that influence how windows are positioned and sized.
@@ -715,6 +714,7 @@ window-rule {
     match app-id="spm"
     match app-id="qt6ct"
     match app-id="qt5ct"
+    match app-id="dev.noctalia.Noctalia"
 
     background-effect {
         blur true
