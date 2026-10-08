@@ -39,6 +39,8 @@ fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
 noctalia_dir="${NOCTALIA_CONFIG_HOME:-$config_dir/noctalia}"
+niri_conf_source="$repo_dir/niri/conf.d"
+niri_conf_target="$config_dir/niri/conf.d"
 kvantum_theme="$repo_dir/kvantum/Kvantum-Tokyo-Night/Kvantum-Tokyo-Night"
 if [[ ! -f "$kvantum_theme/Kvantum-Tokyo-Night.kvconfig" || ! -f "$kvantum_theme/Kvantum-Tokyo-Night.svg" ]]; then
     if "$dry_run"; then
@@ -96,6 +98,11 @@ for i in "${!sources[@]}"; do
         exit 1
     fi
 done
+[[ -d "$niri_conf_source" ]] || { printf 'Missing source: %s\n' "$niri_conf_source" >&2; exit 1; }
+if [[ -e "$niri_conf_target" && ! -L "$niri_conf_target" ]]; then
+    printf 'Cannot replace directory: %s\n' "$niri_conf_target" >&2
+    exit 1
+fi
 kvantum_target="$config_dir/Kvantum/Kvantum-Tokyo-Night"
 if [[ ! -f "$kvantum_theme/Kvantum-Tokyo-Night.kvconfig" || ! -f "$kvantum_theme/Kvantum-Tokyo-Night.svg" ]] && ! "$dry_run"; then
     printf 'Kvantum submodule is incomplete: %s\n' "$kvantum_theme" >&2
@@ -119,6 +126,12 @@ if ! "$user_only"; then
         sudo bash "$repo_dir/scripts/install-keyd.sh"
         sudo bash "$repo_dir/scripts/install-suspend-delay.sh"
     fi
+fi
+
+printf 'Link: %s -> %s\n' "$niri_conf_target" "$niri_conf_source"
+if ! "$dry_run"; then
+    mkdir -p -- "$(dirname -- "$niri_conf_target")"
+    ln -sfnT -- "$niri_conf_source" "$niri_conf_target"
 fi
 
 for i in "${!sources[@]}"; do

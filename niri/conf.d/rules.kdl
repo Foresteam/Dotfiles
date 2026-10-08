@@ -1,0 +1,44 @@
+debug {
+    honor-xdg-activation-with-invalid-serial
+}
+
+window-rule {
+  geometry-corner-radius 12
+  clip-to-geometry true
+}
+window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+}
+window-rule {
+	match app-id="librewolf"
+    match app-id="org.chromium.Chromium"
+
+    open-maximized-to-edges true
+}
+window-rule {
+    match app-id=r#"librewolf$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+window-rule {
+    match app-id="KeePassXC"
+    match app-id="goofcord"
+    match app-id="org.telegram.desktop"
+
+    open-maximized true
+    open-maximized-to-edges false
+}
+
+window-rule {
+    exclude app-id=r#"^(org\.kde\.dolphin|codium|vscodium|VSCodium)$"#
+    open-floating false
+}
+window-rule {
+    match app-id=r#"^(org\.kde\.(polkit-kde-authentication-agent-1|polkitkde|xdg-desktop-portal-kde))$"#
+    match app-id="DesktopEditors"
+    match title=r#"KeePassXC -.*"#
+    match title=r#"Overwrite"#
+    open-floating true
+}

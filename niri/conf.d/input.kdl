@@ -1,0 +1,31 @@
+input {
+    keyboard {
+        xkb {
+            layout "us,ru"
+            options "grp:caps_toggle,grp_led:caps"
+        }
+        numlock
+    }
+    touchpad {
+        tap
+        dwt
+        natural-scroll
+        scroll-method "two-finger"
+    }
+
+    mouse {
+        accel-speed 0.25
+        accel-profile "flat"
+    }
+
+    trackpoint {
+    }
+
+    focus-follows-mouse max-scroll-amount="30%"
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}

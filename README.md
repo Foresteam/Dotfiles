@@ -18,6 +18,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | Tracked file | Installed location |
 | --- | --- |
 | `niri/config.kdl` | `~/.config/niri/config.kdl` |
+| `niri/conf.d` | `~/.config/niri/conf.d` |
 | `niri/scripts/close-hovered-window.sh` | `~/.config/niri/scripts/close-hovered-window.sh` |
 | `noctalia/settings.toml` | `~/.config/noctalia/rice.toml` |
 | `environment.d/qt.conf` | `~/.config/environment.d/qt.conf` |
