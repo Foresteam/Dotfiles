@@ -34,6 +34,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
 | `prismlauncher/iconthemes/prism-papirus/index.theme` | `~/.local/share/PrismLauncher/iconthemes/prism-papirus/index.theme` |
+| `dbus-1/services/org.freedesktop.FileManager1.service` | `~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service` |
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
 | `systemd/user/inhibit-on-download.service` | `~/.config/systemd/user/inhibit-on-download.service` |
@@ -58,6 +59,12 @@ be installed. After installation, restart Prism and select `Prism + Papirus Dark
 under Settings → Launcher → Appearance → Icons. The installer respects
 `XDG_DATA_HOME` and only links the icon theme; it does not replace Prism's
 application settings. This fixes icon contrast, not KDE file picker integration.
+
+The D-Bus `org.freedesktop.FileManager1` activation override points apps that
+request “show in folder” (including browsers and launchers) to Dolphin. Some
+systems ship the same well-known service name with Nautilus as its executable;
+the user service file overrides that system registration. Run the installer
+and restart the affected applications to apply it.
 
 Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
 generates. The installer links Kitty's main config and copy helpers while
