@@ -22,7 +22,7 @@ if (( EUID == 0 )); then
     exit 1
 fi
 
-for command in niri noctalia kitty wl-copy notify-send jq python3 systemctl systemd-inhibit wpctl pactl busctl git; do
+for command in niri noctalia kitty wl-copy notify-send jq python3 systemctl systemd-inhibit wpctl pactl busctl git xdg-mime; do
     command -v "$command" >/dev/null || {
         printf 'Missing dependency: %s\n' "$command" >&2
         exit 1
@@ -66,6 +66,7 @@ sources=(
     "$repo_dir/dbus-1/services/org.freedesktop.FileManager1.service"
     "$repo_dir/scripts/sync-mute-led.py"
     "$repo_dir/scripts/inhibit-on-download"
+    "$repo_dir/scripts/apply-file-manager"
     "$repo_dir/scripts/patch-vscodium-theme.py"
     "$repo_dir/noctalia/templates/vscodium-alpha.json"
     "$repo_dir/systemd/user/mute-led.service"
@@ -88,6 +89,7 @@ targets=(
     "$data_dir/dbus-1/services/org.freedesktop.FileManager1.service"
     "$HOME/.local/bin/rice-sync-mute-led"
     "$HOME/.local/bin/inhibit-on-download"
+    "$HOME/.local/bin/rice-apply-file-manager"
     "$HOME/.local/bin/rice-patch-vscodium-theme"
     "$noctalia_dir/templates/vscodium-alpha.json"
     "$config_dir/systemd/user/mute-led.service"
@@ -164,7 +166,7 @@ if ! "$dry_run"; then
 fi
 
 if "$dry_run"; then
-    printf 'Would reload Noctalia, enable/restart mute-led.service and inhibit-on-download.service, and restart the KDE portal.\n'
+    printf 'Would reload Noctalia and D-Bus activation, enable/restart mute-led.service and inhibit-on-download.service, and restart the KDE and desktop portals.\n'
     exit 0
 fi
 systemctl --user daemon-reload
@@ -172,6 +174,7 @@ systemctl --user enable mute-led.service
 systemctl --user restart mute-led.service
 systemctl --user enable inhibit-on-download.service
 systemctl --user restart inhibit-on-download.service
+busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus ReloadConfig
 systemctl --user restart plasma-xdg-desktop-portal-kde.service
 systemctl --user restart xdg-desktop-portal.service
 if ! noctalia msg config-reload; then

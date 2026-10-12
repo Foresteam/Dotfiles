@@ -12,7 +12,7 @@ Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep th
 
 Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `notify-send`,
 `jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `systemd-inhibit`,
-`git`, and `sudo`. Existing applications,
+`git`, `xdg-mime`, and `sudo`. Existing applications,
 wallpapers, fonts, and cursor assets must already be installed.
 
 | Tracked file | Installed location |
@@ -32,6 +32,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
 | `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
+| `scripts/apply-file-manager` | `~/.local/bin/rice-apply-file-manager` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
 | `prismlauncher/iconthemes/prism-papirus/index.theme` | `~/.local/share/PrismLauncher/iconthemes/prism-papirus/index.theme` |
 | `dbus-1/services/org.freedesktop.FileManager1.service` | `~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service` |
@@ -63,8 +64,19 @@ application settings. This fixes icon contrast, not KDE file picker integration.
 The D-Bus `org.freedesktop.FileManager1` activation override points apps that
 request “show in folder” (including browsers and launchers) to Dolphin. Some
 systems ship the same well-known service name with Nautilus as its executable;
-the user service file overrides that system registration. Run the installer
-and restart the affected applications to apply it.
+the user service file overrides that system registration.
+
+To change the file manager, edit `inode/directory` under `[Default Applications]`
+in `mimeapps.list` and `Exec` in
+`dbus-1/services/org.freedesktop.FileManager1.service`. Dolphin uses
+`org.kde.dolphin.desktop` and `/usr/bin/dolphin --daemon`; Nautilus uses
+`org.gnome.Nautilus.desktop` and `/usr/bin/nautilus --gapplication-service`.
+Then run `rice-apply-file-manager` (or `./scripts/apply-file-manager` before
+installation). It applies the MIME default, links the D-Bus override, reloads
+D-Bus activation files, and restarts `xdg-desktop-portal` so an already-running
+portal picks up the new default. The installer also refreshes both services.
+A previous file manager that still owns `FileManager1` must quit before the
+new activation command can take effect; the helper does not close its windows.
 
 Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
 generates. The installer links Kitty's main config and copy helpers while

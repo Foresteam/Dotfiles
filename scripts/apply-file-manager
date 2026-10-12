@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+repo_dir="$(dirname -- "$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")")"
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"
+
+desktop_file="$(python3 - "$repo_dir/mimeapps.list" <<'PY'
+import configparser
+import sys
+
+config = configparser.ConfigParser(interpolation=None)
+config.read(sys.argv[1])
+desktop = config.get('Default Applications', 'inode/directory').split(';')[0].strip()
+if not desktop.endswith('.desktop'):
+    sys.exit('Set inode/directory to a desktop file in mimeapps.list first.')
+print(desktop)
+PY
+)"
+
+mkdir -p -- "$config_dir" "$data_dir/dbus-1/services"
+ln -sfnT -- "$repo_dir/dbus-1/services/org.freedesktop.FileManager1.service" \
+    "$data_dir/dbus-1/services/org.freedesktop.FileManager1.service"
+xdg-mime default "$desktop_file" inode/directory
+busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus ReloadConfig
+systemctl --user restart xdg-desktop-portal.service
+printf 'Applied file manager: %s. D-Bus activation and portal refreshed.\n' "$desktop_file"
