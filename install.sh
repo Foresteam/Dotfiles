@@ -38,6 +38,7 @@ if ! "$user_only"; then
 fi
 
 config_dir="${XDG_CONFIG_HOME:-$HOME/.config}"
+data_dir="${XDG_DATA_HOME:-$HOME/.local/share}"
 noctalia_dir="${NOCTALIA_CONFIG_HOME:-$config_dir/noctalia}"
 niri_conf_source="$repo_dir/niri/conf.d"
 niri_conf_target="$config_dir/niri/conf.d"
@@ -61,6 +62,7 @@ sources=(
     "$repo_dir/kitty/clean-copy.sh"
     "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
+    "$repo_dir/prismlauncher/iconthemes/prism-papirus/index.theme"
     "$repo_dir/scripts/sync-mute-led.py"
     "$repo_dir/scripts/inhibit-on-download"
     "$repo_dir/scripts/patch-vscodium-theme.py"
@@ -81,6 +83,7 @@ targets=(
     "$config_dir/kitty/clean-copy.sh"
     "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
+    "$data_dir/PrismLauncher/iconthemes/prism-papirus/index.theme"
     "$HOME/.local/bin/rice-sync-mute-led"
     "$HOME/.local/bin/inhibit-on-download"
     "$HOME/.local/bin/rice-patch-vscodium-theme"

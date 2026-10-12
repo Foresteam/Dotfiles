@@ -33,6 +33,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
 | `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
+| `prismlauncher/iconthemes/prism-papirus/index.theme` | `~/.local/share/PrismLauncher/iconthemes/prism-papirus/index.theme` |
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
 | `systemd/user/inhibit-on-download.service` | `~/.config/systemd/user/inhibit-on-download.service` |
@@ -49,6 +50,14 @@ as `~/.config/Kvantum/.Kvantum-Tokyo-Night.rice-backup` before linking it.
 
 Matching Discord theme:
 [DiscordTokyoNightTransparent](https://github.com/Foresteam/DiscordTokyoNightTransparent).
+
+Prism Launcher's `Prism + Papirus Dark` icon theme inherits `Papirus-Dark`
+first, then its built-in `flat_white` theme. This gives file dialogs visible
+icons and supplies Prism-specific icons from Flat (White). Papirus must already
+be installed. After installation, restart Prism and select `Prism + Papirus Dark`
+under Settings → Launcher → Appearance → Icons. The installer respects
+`XDG_DATA_HOME` and only links the icon theme; it does not replace Prism's
+application settings. This fixes icon contrast, not KDE file picker integration.
 
 Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
 generates. The installer links Kitty's main config and copy helpers while
