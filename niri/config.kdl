@@ -9,6 +9,9 @@ cursor {
 environment {
 	QT_QPA_PLATFORMTHEME "qt6ct"
 	QT_STYLE_OVERRIDE "kvantum"
+	GTK_USE_PORTAL "1"
+	GDK_DPI_SCALE "1"
+	FASTFETCH_IMAGE "/home/foresteam/Pictures/arch_chan_mini.png"
 }
 
 hotkey-overlay {

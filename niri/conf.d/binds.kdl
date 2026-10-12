@@ -20,6 +20,7 @@ binds {
     Mod+O repeat=false { toggle-overview; }
     F24 repeat=false { toggle-overview; }
 
+    Mod+Space repeat=false { spawn "handy" "--toggle-transcription"; }
     Mod+Q repeat=false { spawn-sh "sh \"${XDG_CONFIG_HOME:-$HOME/.config}/niri/scripts/close-hovered-window.sh\""; }
 		Alt+F4 repeat=false { close-window; }
 
@@ -148,9 +149,28 @@ binds {
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
     Mod+W { toggle-column-tabbed-display; }
 
-    Print { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    // Print { screenshot; }
+    Print { spawn-sh "noctalia msg screenshot-region"; }
+    // Ctrl+Print { screenshot-screen; }
+    Ctrl+Print { spawn-sh "noctalia msg screenshot-fullscreen"; }
+    // Alt+Print { screenshot-window; }
+    Alt+Print { spawn-sh "noctalia msg annotate"; }
+
+// 		Mod+Shift+S {
+//     spawn-sh "noctalia msg screenshot-region";
+// }
+
+// Print {
+//     spawn-sh "noctalia msg screenshot-fullscreen";
+// }
+
+// Mod+Shift+A {
+//     spawn-sh "noctalia msg screenshot-annotate";
+// }
+
+// Mod+Alt+A {
+//     spawn-sh "noctalia msg annotate";
+// }
 
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
     Mod+Shift+E { quit; }
