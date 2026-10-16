@@ -1,4 +1,5 @@
 [Added Associations]
+application/gzip=org.kde.ark.desktop;org.gnome.Nautilus.desktop;7zFM.desktop;
 application/json=codium.desktop;
 application/msword=onlyoffice-desktopeditors.desktop;
 application/pdf=librewolf.desktop;
@@ -119,6 +120,7 @@ x-scheme-handler/sms=org.gnome.Shell.Extensions.GSConnect.desktop;
 x-scheme-handler/tel=org.gnome.Shell.Extensions.GSConnect.desktop;
 
 [Default Applications]
+application/gzip=org.kde.ark.desktop;
 application/json=codium.desktop
 application/msword=onlyoffice-desktopeditors.desktop
 application/ogg=audacious.desktop
@@ -180,6 +182,7 @@ image/avif=org.kde.gwenview.desktop
 image/bmp=org.kde.gwenview.desktop
 image/gif=org.kde.gwenview.desktop
 image/heic=org.kde.gwenview.desktop
+image/heif=org.kde.gwenview.desktop
 image/jpeg=org.kde.gwenview.desktop
 image/jxl=org.gnome.Loupe.desktop
 image/png=org.kde.gwenview.desktop
@@ -192,6 +195,7 @@ image/vnd.radiance=org.gnome.Loupe.desktop
 image/webp=org.kde.gwenview.desktop
 image/x-dds=org.gnome.Loupe.desktop
 image/x-exr=org.gnome.Loupe.desktop
+image/x-icon=org.kde.gwenview.desktop
 image/x-portable-anymap=org.gnome.Loupe.desktop
 image/x-portable-bitmap=org.gnome.Loupe.desktop
 image/x-portable-graymap=org.gnome.Loupe.desktop
@@ -250,11 +254,9 @@ video/x-ogm+ogg=org.videolan.VLC.desktop
 video/x-theora=org.videolan.VLC.desktop
 video/x-theora+ogg=org.videolan.VLC.desktop
 x-content/audio-cdda=audacious.desktop
+x-scheme-handler/codex=chatgpt.desktop
 x-scheme-handler/figma=figma-linux.desktop
 x-scheme-handler/http=librewolf.desktop
 x-scheme-handler/https=librewolf.desktop
 x-scheme-handler/nxm=amethystmodmanager-nxm.desktop
 x-scheme-handler/postman=Postman.desktop
-image/heif=org.kde.gwenview.desktop
-image/x-icon=org.kde.gwenview.desktop
-x-scheme-handler/codex=chatgpt.desktop
