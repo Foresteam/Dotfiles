@@ -30,6 +30,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
+| `noctalia/templates/telegram.tdesktop-theme` | `~/.config/noctalia/templates/telegram.tdesktop-theme` |
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
 | `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
 | `scripts/apply-file-manager` | `~/.local/bin/rice-apply-file-manager` |
@@ -98,6 +99,17 @@ entries use `80` for inactive title/tabs and `B3` for the active tab. Missing
 tokens use the overlay's current palette color. Edit
 `noctalia/templates/vscodium-alpha.json` to change opacity; keep the VSCode
 community template enabled in Noctalia. Reapply with `noctalia msg templates-apply`.
+
+The `telegram_rice` user template writes
+`~/.config/telegram-desktop/themes/noctalia.tdesktop-theme`. It supplies dark
+media-menu colors, readable selected messages and badges, and replaces keys
+Telegram ignores. In Noctalia Settings → Templates, disable the community
+`telegram` template so it does not write the same output file. Noctalia enables
+the user template through the tracked `theme.templates.user.telegram_rice`
+entry; user templates do not appear as alternatives in the community catalog.
+Edit `noctalia/templates/telegram.tdesktop-theme` instead of the generated file,
+then run `noctalia msg templates-apply` and re-import the generated theme in
+Telegram Desktop to see the new colors.
 
 `mimeapps.list` assigns both plain text and empty files to VSCodium:
 `xdg-open` identifies an empty config as `inode/x-empty`, while GIO uses
