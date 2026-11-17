@@ -1,0 +1,2 @@
+[permissions.project-safe.filesystem.":workspace_roots"]
+".git" = "write"
