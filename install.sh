@@ -22,7 +22,7 @@ if (( EUID == 0 )); then
     exit 1
 fi
 
-for command in niri noctalia kitty wl-copy notify-send jq python3 systemctl systemd-inhibit wpctl pactl busctl git xdg-mime; do
+for command in niri noctalia kitty fish wl-copy notify-send jq python3 systemctl wpctl pactl busctl git xdg-mime; do
     command -v "$command" >/dev/null || {
         printf 'Missing dependency: %s\n' "$command" >&2
         exit 1
@@ -60,18 +60,24 @@ sources=(
     "$repo_dir/kitty/kitty.conf"
     "$repo_dir/kitty/copy.sh"
     "$repo_dir/kitty/clean-copy.sh"
+    "$repo_dir/fish/config.fish"
+    "$repo_dir/fish/fish_plugins"
+    "$repo_dir/fish/conf.d/rice-theme.fish"
+    "$repo_dir/fish/functions/fastfetch-responsive.fish"
+    "$repo_dir/fish/functions/fish_greeting.fish"
+    "$repo_dir/fish/completions/gpk.fish"
     "$repo_dir/kvantum/kvantum.kvconfig"
     "$repo_dir/mimeapps.list"
     "$repo_dir/prismlauncher/iconthemes/prism-papirus/index.theme"
     "$repo_dir/dbus-1/services/org.freedesktop.FileManager1.service"
     "$repo_dir/scripts/sync-mute-led.py"
-    "$repo_dir/scripts/inhibit-on-download"
+    # "$repo_dir/scripts/inhibit-on-download"
     "$repo_dir/scripts/apply-file-manager"
     "$repo_dir/scripts/patch-vscodium-theme.py"
     "$repo_dir/noctalia/templates/vscodium-alpha.json"
     "$repo_dir/noctalia/templates/telegram.tdesktop-theme"
     "$repo_dir/systemd/user/mute-led.service"
-    "$repo_dir/systemd/user/inhibit-on-download.service"
+    # "$repo_dir/systemd/user/inhibit-on-download.service"
     "$repo_dir/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf"
 )
 targets=(
@@ -84,18 +90,24 @@ targets=(
     "$config_dir/kitty/kitty.conf"
     "$config_dir/kitty/copy.sh"
     "$config_dir/kitty/clean-copy.sh"
+    "$config_dir/fish/config.fish"
+    "$config_dir/fish/fish_plugins"
+    "$config_dir/fish/conf.d/rice-theme.fish"
+    "$config_dir/fish/functions/fastfetch-responsive.fish"
+    "$config_dir/fish/functions/fish_greeting.fish"
+    "$config_dir/fish/completions/gpk.fish"
     "$config_dir/Kvantum/kvantum.kvconfig"
     "$config_dir/mimeapps.list"
     "$data_dir/PrismLauncher/iconthemes/prism-papirus/index.theme"
     "$data_dir/dbus-1/services/org.freedesktop.FileManager1.service"
     "$HOME/.local/bin/rice-sync-mute-led"
-    "$HOME/.local/bin/inhibit-on-download"
+    # "$HOME/.local/bin/inhibit-on-download"
     "$HOME/.local/bin/rice-apply-file-manager"
     "$HOME/.local/bin/rice-patch-vscodium-theme"
     "$noctalia_dir/templates/vscodium-alpha.json"
     "$noctalia_dir/templates/telegram.tdesktop-theme"
     "$config_dir/systemd/user/mute-led.service"
-    "$config_dir/systemd/user/inhibit-on-download.service"
+    # "$config_dir/systemd/user/inhibit-on-download.service"
     "$config_dir/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf"
 )
 
@@ -125,6 +137,7 @@ if [[ -L "$config_dir/niri/config.kdl" && "$(readlink -f -- "$config_dir/niri/co
 fi
 niri validate -c "$niri_config"
 noctalia config validate "$repo_dir/noctalia/settings.toml"
+fish -n "$repo_dir/fish/config.fish" "$repo_dir/fish/conf.d/rice-theme.fish" "$repo_dir/fish/functions/fastfetch-responsive.fish" "$repo_dir/fish/functions/fish_greeting.fish" "$repo_dir/fish/completions/gpk.fish"
 if ! "$user_only"; then keyd check "$repo_dir/keyd/default.conf"; fi
 
 if ! "$user_only"; then
@@ -168,14 +181,14 @@ if ! "$dry_run"; then
 fi
 
 if "$dry_run"; then
-    printf 'Would reload Noctalia and D-Bus activation, enable/restart mute-led.service and inhibit-on-download.service, and restart the KDE and desktop portals.\n'
+    printf 'Would reload Noctalia and D-Bus activation, enable/restart mute-led.service, and restart the KDE and desktop portals.\n'
     exit 0
 fi
 systemctl --user daemon-reload
 systemctl --user enable mute-led.service
 systemctl --user restart mute-led.service
-systemctl --user enable inhibit-on-download.service
-systemctl --user restart inhibit-on-download.service
+# systemctl --user enable inhibit-on-download.service
+# systemctl --user restart inhibit-on-download.service
 busctl --user call org.freedesktop.DBus /org/freedesktop/DBus org.freedesktop.DBus ReloadConfig
 systemctl --user restart plasma-xdg-desktop-portal-kde.service
 systemctl --user restart xdg-desktop-portal.service

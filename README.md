@@ -6,12 +6,12 @@ the tracked files before applying them; use Git history for rollback.
 Run `./install.sh --dry-run` to preview, then `./install.sh` to install. The
 installer replaces the files below with symlinks into this checkout, installs
 the F1 mute-light helper as `~/.local/bin/rice-sync-mute-led`, and enables keyd,
-the mute-light service, and the download suspend inhibitor. Use `--user-only`
-to skip system changes.
+the mute-light service. The download suspend inhibitor is disabled in the
+installer. Use `--user-only` to skip system changes.
 Run it as your normal user; it uses sudo for keyd and the suspend delay. Keep the checkout in place.
 
-Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `wl-copy`, `notify-send`,
-`jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`, `systemd-inhibit`,
+Required commands: `niri`, `noctalia`, `keyd`, `kitty`, `fish`, `wl-copy`, `notify-send`,
+`jq`, `python3`, `wpctl`, `pactl`, `busctl`, `systemctl`,
 `git`, `xdg-mime`, and `sudo`. Existing applications,
 wallpapers, fonts, and cursor assets must already be installed.
 
@@ -27,19 +27,25 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `kitty/kitty.conf` | `~/.config/kitty/kitty.conf` |
 | `kitty/copy.sh` | `~/.config/kitty/copy.sh` |
 | `kitty/clean-copy.sh` | `~/.config/kitty/clean-copy.sh` |
+| `fish/config.fish` | `~/.config/fish/config.fish` |
+| `fish/fish_plugins` | `~/.config/fish/fish_plugins` |
+| `fish/conf.d/rice-theme.fish` | `~/.config/fish/conf.d/rice-theme.fish` |
+| `fish/functions/fastfetch-responsive.fish` | `~/.config/fish/functions/fastfetch-responsive.fish` |
+| `fish/functions/fish_greeting.fish` | `~/.config/fish/functions/fish_greeting.fish` |
+| `fish/completions/gpk.fish` | `~/.config/fish/completions/gpk.fish` |
 | `kvantum/kvantum.kvconfig` | `~/.config/Kvantum/kvantum.kvconfig` |
 | `kvantum/Kvantum-Tokyo-Night` submodule's theme directory | `~/.config/Kvantum/Kvantum-Tokyo-Night` |
 | `noctalia/templates/vscodium-alpha.json` | `~/.config/noctalia/templates/vscodium-alpha.json` |
 | `noctalia/templates/telegram.tdesktop-theme` | `~/.config/noctalia/templates/telegram.tdesktop-theme` |
 | `scripts/patch-vscodium-theme.py` | `~/.local/bin/rice-patch-vscodium-theme` |
-| `scripts/inhibit-on-download` | `~/.local/bin/inhibit-on-download` |
+| `scripts/inhibit-on-download` (disabled) | `~/.local/bin/inhibit-on-download` |
 | `scripts/apply-file-manager` | `~/.local/bin/rice-apply-file-manager` |
 | `mimeapps.list` | `~/.config/mimeapps.list` |
 | `prismlauncher/iconthemes/prism-papirus/index.theme` | `~/.local/share/PrismLauncher/iconthemes/prism-papirus/index.theme` |
 | `dbus-1/services/org.freedesktop.FileManager1.service` | `~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service` |
 | `keyd/default.conf` | `/etc/keyd/default.conf` |
 | `systemd/user/mute-led.service` | `~/.config/systemd/user/mute-led.service` |
-| `systemd/user/inhibit-on-download.service` | `~/.config/systemd/user/inhibit-on-download.service` |
+| `systemd/user/inhibit-on-download.service` (disabled) | `~/.config/systemd/user/inhibit-on-download.service` |
 | `systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` | `/etc/systemd/system/systemd-suspend.service.d/lockscreen-delay.conf` |
 | `systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` | `~/.config/systemd/user/plasma-xdg-desktop-portal-kde.service.d/override.conf` |
 
@@ -83,6 +89,15 @@ Kitty reads colors from `~/.config/kitty/themes/noctalia.conf`, which Noctalia
 generates. The installer links Kitty's main config and copy helpers while
 leaving the generated color file in place.
 
+Fish tracks the handwritten config, functions, completion, Fisher plugin list,
+and the current syntax colors and Tide prompt settings in `rice-theme.fish`.
+`gp` runs `git push`, matching the Oh My Zsh Git plugin alias. Fish history
+(`~/.local/share/fish/fish_history`), universal variables, private files, and
+generated Tide plugin files stay local and are not installed from this repo.
+The `.gitignore` allows only the reviewed Fish files. The tracked theme loads
+after Fish's generated `fish_frozen_theme.fish` and shadows Tide's universal
+theme variables; edit `fish/conf.d/rice-theme.fish` to change the saved theme.
+
 The VSCodium opacity template runs after the community VSCode template. Its
 synchronous post-hook patches every installed `noctalia.noctaliatheme-*` variant,
 preserving generated RGB colors and capping all background tokens at `A6` alpha.
@@ -122,10 +137,9 @@ F24 to its overview. Fn brightness, volume, and media shortcuts use Noctalia.
 The user service updates the F1 light from the default output's mute state,
 including USB audio devices, through logind.
 
-The download monitor checks incoming bytes on non-loopback network interfaces
-once per second. It blocks suspend above 64 KiB/s and releases the block 30
-seconds after traffic drops. This is a traffic heuristic, so streaming and
-other sustained incoming traffic also keep the machine awake.
+The download monitor is retained in the repository but commented out in the
+installer. Previously installed copies must be stopped and disabled with
+`systemctl --user disable --now inhibit-on-download.service`.
 
 The systemd suspend drop-in waits two seconds before freezing the user session,
 giving Noctalia's lock animation time to finish. Install it separately with

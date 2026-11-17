@@ -1,0 +1,15 @@
+# Only the reviewed Fish files below can enter Git. Fish history, universal
+# variables, private files, and generated plugin files stay local.
+/fish/*
+!/fish/config.fish
+!/fish/fish_plugins
+!/fish/conf.d/
+/fish/conf.d/*
+!/fish/conf.d/rice-theme.fish
+!/fish/functions/
+/fish/functions/*
+!/fish/functions/fastfetch-responsive.fish
+!/fish/functions/fish_greeting.fish
+!/fish/completions/
+/fish/completions/*
+!/fish/completions/gpk.fish
