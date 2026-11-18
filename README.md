@@ -29,6 +29,7 @@ wallpapers, fonts, and cursor assets must already be installed.
 | `kitty/clean-copy.sh` | `~/.config/kitty/clean-copy.sh` |
 | `fish/config.fish` | `~/.config/fish/config.fish` |
 | `fish/fish_plugins` | `~/.config/fish/fish_plugins` |
+| `fish/conf.d/git-aliases.fish` | `~/.config/fish/conf.d/git-aliases.fish` |
 | `fish/conf.d/rice-theme.fish` | `~/.config/fish/conf.d/rice-theme.fish` |
 | `fish/functions/fastfetch-responsive.fish` | `~/.config/fish/functions/fastfetch-responsive.fish` |
 | `fish/functions/fish_greeting.fish` | `~/.config/fish/functions/fish_greeting.fish` |
@@ -90,8 +91,10 @@ generates. The installer links Kitty's main config and copy helpers while
 leaving the generated color file in place.
 
 Fish tracks the handwritten config, functions, completion, Fisher plugin list,
-and the current syntax colors and Tide prompt settings in `rice-theme.fish`.
-`gp` runs `git push`, matching the Oh My Zsh Git plugin alias. Fish history
+the Oh My Zsh Git plugin shortcuts ported to Fish in `git-aliases.fish`, and
+the current syntax colors and Tide prompt settings in `rice-theme.fish`.
+Personal Git overrides in `config.fish` load after the plugin shortcuts, so
+`gcm` still commits and `gl` still shows the decorated graph. Fish history
 (`~/.local/share/fish/fish_history`), universal variables, private files, and
 generated Tide plugin files stay local and are not installed from this repo.
 The `.gitignore` allows only the reviewed Fish files. The tracked theme loads

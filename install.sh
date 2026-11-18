@@ -62,6 +62,7 @@ sources=(
     "$repo_dir/kitty/clean-copy.sh"
     "$repo_dir/fish/config.fish"
     "$repo_dir/fish/fish_plugins"
+    "$repo_dir/fish/conf.d/git-aliases.fish"
     "$repo_dir/fish/conf.d/rice-theme.fish"
     "$repo_dir/fish/functions/fastfetch-responsive.fish"
     "$repo_dir/fish/functions/fish_greeting.fish"
@@ -92,6 +93,7 @@ targets=(
     "$config_dir/kitty/clean-copy.sh"
     "$config_dir/fish/config.fish"
     "$config_dir/fish/fish_plugins"
+    "$config_dir/fish/conf.d/git-aliases.fish"
     "$config_dir/fish/conf.d/rice-theme.fish"
     "$config_dir/fish/functions/fastfetch-responsive.fish"
     "$config_dir/fish/functions/fish_greeting.fish"
@@ -137,7 +139,7 @@ if [[ -L "$config_dir/niri/config.kdl" && "$(readlink -f -- "$config_dir/niri/co
 fi
 niri validate -c "$niri_config"
 noctalia config validate "$repo_dir/noctalia/settings.toml"
-fish -n "$repo_dir/fish/config.fish" "$repo_dir/fish/conf.d/rice-theme.fish" "$repo_dir/fish/functions/fastfetch-responsive.fish" "$repo_dir/fish/functions/fish_greeting.fish" "$repo_dir/fish/completions/gpk.fish"
+fish -n "$repo_dir/fish/config.fish" "$repo_dir/fish/conf.d/git-aliases.fish" "$repo_dir/fish/conf.d/rice-theme.fish" "$repo_dir/fish/functions/fastfetch-responsive.fish" "$repo_dir/fish/functions/fish_greeting.fish" "$repo_dir/fish/completions/gpk.fish"
 if ! "$user_only"; then keyd check "$repo_dir/keyd/default.conf"; fi
 
 if ! "$user_only"; then
